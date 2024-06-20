@@ -8,4 +8,4 @@ build-web:
 	flutter clean
 	flutter pub get
 	flutter build web
-	mv build/web/* docs/
+	mv build/web docs/
