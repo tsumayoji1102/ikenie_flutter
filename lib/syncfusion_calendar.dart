@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class SyncFusionCalendar extends StatelessWidget {
-  SyncFusionCalendar({Key? key}) : super(key: key);
+  SyncFusionCalendar({super.key});
 
   final calendarController = CalendarController();
 
@@ -37,21 +37,14 @@ class SyncFusionCalendar extends StatelessWidget {
           view: CalendarView.month,
           controller: calendarController,
           timeZone: 'Tokyo Standard Time',
-          //firstDayOfWeek: controller.personalSettingConverter(),
           showDatePickerButton: true,
           showNavigationArrow: true,
           allowDragAndDrop: false,
           showTodayButton: true,
           appointmentTimeTextFormat: 'HH:mm',
-          dataSource:
-              ScheduleHeaderDataSource(dateCount: monthAppointmentDisplayCount),
+          dataSource: ScheduleHeaderDataSource(
+              displayCount: monthAppointmentDisplayCount),
           onTap: (details) async {},
-          // onViewChanged: (viewChangedDetails) async {
-          //   final firstDateOfVisibleMonth = viewChangedDetails.visibleDates[0];
-          //   await controller.refreshSchedule(
-          //     displayedFirstDate: firstDateOfVisibleMonth,
-          //   );
-          // },
           monthViewSettings: const MonthViewSettings(
             appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
             appointmentDisplayCount: monthAppointmentDisplayCount,
@@ -72,18 +65,32 @@ class SyncFusionCalendar extends StatelessWidget {
 
 //
 class ScheduleHeaderDataSource extends CalendarDataSource {
-  ScheduleHeaderDataSource({required int dateCount}) {
-    appointments = createAppointments(dateCount);
+  ScheduleHeaderDataSource({required int displayCount}) {
+    appointments = _createAppointments(displayCount);
     resources = [];
   }
 
-  List<Appointment> createAppointments(int dateCount) {
+  List<Appointment> _createAppointments(int displayCount) {
     List<Appointment> appointments = [];
-    for (var i = 0; i < dateCount + 1; i++) {
+    appointments.addAll(_createAppointmentsInDay(
+        displayCount: displayCount, day: 16, isOverDisplayCount: false));
+    appointments.addAll(_createAppointmentsInDay(
+        displayCount: displayCount, day: 18, isOverDisplayCount: true));
+    return appointments;
+  }
+
+  List<Appointment> _createAppointmentsInDay({
+    required int displayCount,
+    required int day,
+    required bool isOverDisplayCount,
+  }) {
+    List<Appointment> appointments = [];
+    final maxCount = isOverDisplayCount ? displayCount + 1 : displayCount;
+    for (var i = 0; i < maxCount; i++) {
       final appointment = Appointment(
         id: i,
-        startTime: DateTime(2024, 6, 16, 8 + i),
-        endTime: DateTime(2024, 6, 16, 17),
+        startTime: DateTime(2024, 6, day, 8 + i),
+        endTime: DateTime(2024, 6, day, 17),
         subject: "event $i",
         color: i % 2 == 0 ? Colors.red : Colors.blue,
         resourceIds: [],
