@@ -9,4 +9,4 @@ build-web:
 	flutter pub get
 	flutter build web --base-href /ikenie_flutter/
 	rm -rf docs/*
-	mv build/web docs/
+	mv build/web/* docs/
