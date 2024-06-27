@@ -8,7 +8,7 @@ class SyncFusionCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const monthAppointmentDisplayCount = 4;
+    const monthAppointmentDisplayCount = 5;
     return MaterialApp(
       title: 'SyncFusion Calendar',
       theme: ThemeData(
@@ -23,7 +23,13 @@ class SyncFusionCalendar extends StatelessWidget {
           appointmentTextStyle: const TextStyle(fontWeight: FontWeight.bold),
           blackoutDatesTextStyle: const TextStyle(fontWeight: FontWeight.bold),
           appointmentBuilder: (context, details) {
-            final appointment = details.appointments.first;
+            Appointment appointment;
+            if (details.isMoreAppointmentRegion) {
+              appointment = details.appointments
+                  .elementAt(monthAppointmentDisplayCount - 1);
+            } else {
+              appointment = details.appointments.first;
+            }
             return Container(
               color: appointment.color,
               child: Center(
@@ -73,9 +79,9 @@ class ScheduleHeaderDataSource extends CalendarDataSource {
   List<Appointment> _createAppointments(int displayCount) {
     List<Appointment> appointments = [];
     appointments.addAll(_createAppointmentsInDay(
-        displayCount: displayCount, day: 16, isOverDisplayCount: false));
+        displayCount: displayCount, day: 23, isOverDisplayCount: false));
     appointments.addAll(_createAppointmentsInDay(
-        displayCount: displayCount, day: 18, isOverDisplayCount: true));
+        displayCount: displayCount, day: 27, isOverDisplayCount: true));
     return appointments;
   }
 
@@ -91,7 +97,7 @@ class ScheduleHeaderDataSource extends CalendarDataSource {
         id: i,
         startTime: DateTime(2024, 6, day, 8 + i),
         endTime: DateTime(2024, 6, day, 17),
-        subject: "event $i",
+        subject: "$day $i",
         color: i % 2 == 0 ? Colors.red : Colors.blue,
         resourceIds: [],
       );
