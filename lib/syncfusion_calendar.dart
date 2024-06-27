@@ -23,13 +23,10 @@ class SyncFusionCalendar extends StatelessWidget {
           appointmentTextStyle: const TextStyle(fontWeight: FontWeight.bold),
           blackoutDatesTextStyle: const TextStyle(fontWeight: FontWeight.bold),
           appointmentBuilder: (context, details) {
-            Appointment appointment;
-            if (details.isMoreAppointmentRegion) {
-              appointment = details.appointments
-                  .elementAt(monthAppointmentDisplayCount - 1);
-            } else {
-              appointment = details.appointments.first;
-            }
+            final appointment = details.isMoreAppointmentRegion
+                ? details.appointments
+                    .elementAt(monthAppointmentDisplayCount - 1)
+                : details.appointments.first;
             return Container(
               color: appointment.color,
               child: Center(
