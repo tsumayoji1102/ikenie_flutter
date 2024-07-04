@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ikenie_flutter/syncfusion_calendar.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ikenie_flutter/tab/syncfusion_calendar.dart';
+import 'package:ikenie_flutter/tab/tabs_enum.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatefulHookWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
 
@@ -32,12 +34,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final currentTab = useState<Tabs>(Tabs.calendar);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(currentTab.value.title),
       ),
-      body: SyncFusionCalendar(),
+      body: IndexedStack(
+        index: currentTab.value.index,
+        children: [SyncFusionCalendarView()],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentTab.value.index,
+        items: Tabs.values.map((tab) => tab.item).toList(),
+        onTap: (value) => currentTab.value = Tabs.values[value],
+      ),
     );
   }
 }
