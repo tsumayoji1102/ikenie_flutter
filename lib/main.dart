@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:ikenie_flutter/tab/syncfusion_calendar.dart';
-import 'package:ikenie_flutter/tab/tabs_enum.dart';
+import 'package:ikenie_flutter/ui/tab/syncfusion_calendar.dart';
+import 'package:ikenie_flutter/ui/tab/tabs_enum.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: IndexedStack(
         index: currentTab.value.index,
-        children: [SyncFusionCalendarView()],
+        children: Tabs.values.map((tab) => tab.view).toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentTab.value.index,

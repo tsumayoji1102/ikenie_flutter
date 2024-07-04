@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ikenie_flutter/tab/keyboard_actions.dart';
-import 'package:ikenie_flutter/tab/syncfusion_calendar.dart';
+import 'package:ikenie_flutter/ui/tab/keyboard_actions.dart';
+import 'package:ikenie_flutter/ui/tab/syncfusion_calendar.dart';
 
 enum Tabs {
   calendar,
