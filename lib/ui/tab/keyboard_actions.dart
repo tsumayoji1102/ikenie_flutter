@@ -13,41 +13,27 @@ class KeyboardActionsView extends HookWidget {
         ]);
     return DoneKeyboardActions(
       focusNodes: focusNodes,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            focusNode: focusNodes[0],
-            decoration: const InputDecoration(
-                border: UnderlineInputBorder(), labelText: "FirstName"),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextField(
-            focusNode: focusNodes[1],
-            decoration: const InputDecoration(
-                border: UnderlineInputBorder(), labelText: 'Last Name'),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              focusNode: focusNodes[0],
+              decoration: const InputDecoration(
+                  border: UnderlineInputBorder(), labelText: "FirstName"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              focusNode: focusNodes[1],
+              decoration: const InputDecoration(
+                  border: UnderlineInputBorder(), labelText: 'Last Name'),
+            ),
+          ],
+        ),
       ),
     );
-    // return Column(
-    //   mainAxisSize: MainAxisSize.min,
-    //   children: [
-    //     const Text("aaaa"),
-    //     TextField(
-    //       focusNode: focusNodes[0],
-    //       decoration: const InputDecoration(border: OutlineInputBorder()),
-    //     ),
-    //     const SizedBox(
-    //       height: 20,
-    //     ),
-    //     TextField(
-    //       focusNode: focusNodes[1],
-    //       decoration: const InputDecoration(labelText: 'Last Name'),
-    //     ),
-    //   ],
-    // );
   }
 }
