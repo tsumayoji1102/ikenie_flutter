@@ -13,17 +13,17 @@ class DoneKeyboardActions extends StatelessWidget {
     super.key,
     required this.child,
     required this.focusNodes,
-    this.onDone,
+    this.nextFocus = false,
   });
 
   /// [child] widget for using keyboard actions.
   final Widget child;
 
   /// [focusNodes] 処理するテキストフィールドのfocusNode.複数フィールドに対応.
-  final List<FocusNode> focusNodes;
+  final List<FocusNode>? focusNodes;
 
-  /// [onDone] 完了ボタンタップ時に動かしたい処理.
-  final VoidCallback? onDone;
+  ///
+  final bool nextFocus;
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +44,13 @@ class DoneKeyboardActions extends StatelessWidget {
       ),
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.grey[200],
-      nextFocus: false,
+      nextFocus: nextFocus,
       // 複数のテキストフィールド使用してもDoneボタンが適用されるようにする
-      actions: focusNodes
-          .map(
-            (focusNode) => KeyboardActionsItem(
-              focusNode: focusNode,
-              onTapAction: onDone,
-            ),
-          )
-          .toList(),
+      actions: focusNodes != null
+          ? focusNodes!
+              .map((node) => KeyboardActionsItem(focusNode: node))
+              .toList()
+          : [],
     );
   }
 }

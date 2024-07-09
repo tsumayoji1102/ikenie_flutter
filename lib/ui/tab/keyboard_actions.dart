@@ -13,6 +13,7 @@ class KeyboardActionsView extends HookWidget {
         ]);
     return DoneKeyboardActions(
       focusNodes: focusNodes,
+      nextFocus: true,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(

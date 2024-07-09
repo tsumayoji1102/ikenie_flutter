@@ -33,6 +33,11 @@ class MyHomePage extends StatefulHookWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final currentTab = useState<Tabs>(Tabs.calendar);
     return Scaffold(
