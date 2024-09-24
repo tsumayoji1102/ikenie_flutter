@@ -1,3 +1,13 @@
 {
-  "cSpell.words": ["Cupertino", "ikenie", "Schyler", "syncfusion", "unfocus"]
+  "cSpell.words": [
+    "Cupertino",
+    "ikenie",
+    "Linkifier",
+    "linkifiers",
+    "linkify",
+    "Schyler",
+    "syncfusion",
+    "unfocus"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.22.1"
 }
