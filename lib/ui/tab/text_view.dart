@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:linkify/linkify.dart';
 
 class TextView extends StatelessWidget {
@@ -12,6 +14,7 @@ class TextView extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.all(20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SelectableCopyText(
               "ああああああ 111111 aaaaaaa ###### \n https://google.com"),
@@ -21,6 +24,10 @@ class TextView extends StatelessWidget {
               hintText: 'Enter your username',
             ),
           ),
+          SizedBox(height: 20),
+          Text("拡大表示実験用", style: TextStyle(fontSize: 30)),
+          SizedBox(height: 4),
+          Text("適当な文字など入れてみる") //, style: TextStyle(fontSize: 12)),
         ],
       ),
     );

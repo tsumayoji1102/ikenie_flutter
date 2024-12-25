@@ -7,6 +7,23 @@ class KeyboardActionsView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          color: Colors.red,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 2,
+          child: _TextFieldArea(),
+        ),
+        Expanded(child: _TextFieldArea())
+      ],
+    );
+  }
+}
+
+class _TextFieldArea extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
     final focusNodes = useMemoized(() => [
           FocusNode(),
           FocusNode(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:ikenie_flutter/ui/tab/syncfusion_calendar.dart';
 import 'package:ikenie_flutter/ui/tab/tabs_enum.dart';
 
 void main() {
@@ -12,13 +11,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const locale = const Locale('ja', 'JP');
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      locale: locale,
       home: const MyHomePage(),
+      //supportedLocales: [locale],
     );
   }
 }
@@ -28,7 +30,7 @@ class MyHomePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentTab = useState<Tabs>(Tabs.listsView);
+    final currentTab = useState<Tabs>(Tabs.calendar);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -42,6 +44,8 @@ class MyHomePage extends HookWidget {
         currentIndex: currentTab.value.index,
         items: Tabs.values.map((tab) => tab.item).toList(),
         onTap: (value) => currentTab.value = Tabs.values[value],
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.red,
       ),
     );
   }

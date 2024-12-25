@@ -38,7 +38,7 @@ dependencies:
   flutter_hooks: ^0.20.5
   linkify: ^5.0.0
   keyboard_actions: ^4.2.0
-  #syncfusion_flutter_calendar: 26.1.35
+  syncfusion_flutter_calendar: ^26.1.35
 
 dev_dependencies:
   flutter_test:

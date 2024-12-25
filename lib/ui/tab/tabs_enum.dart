@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikenie_flutter/ui/tab/keyboard_actions.dart';
 import 'package:ikenie_flutter/ui/tab/lists_view.dart';
+import 'package:ikenie_flutter/ui/tab/nested_scroll_view.dart';
 import 'package:ikenie_flutter/ui/tab/syncfusion_calendar.dart';
 import 'package:ikenie_flutter/ui/tab/text_view.dart';
 
@@ -8,7 +9,8 @@ enum Tabs {
   calendar,
   keyboard,
   textView,
-  listsView;
+  listsView,
+  sliverCheckView;
 
   String get title {
     switch (this) {
@@ -20,6 +22,8 @@ enum Tabs {
         return 'Text View';
       case Tabs.listsView:
         return 'Lists View';
+      case Tabs.sliverCheckView:
+        return 'Nested Scroll View';
     }
   }
 
@@ -32,7 +36,9 @@ enum Tabs {
       case Tabs.textView:
         return const TextView();
       case Tabs.listsView:
-        return const ListsView();
+        return ListsView();
+      case Tabs.sliverCheckView:
+        return const SliverCheckView();
     }
   }
 
@@ -41,32 +47,40 @@ enum Tabs {
     switch (this) {
       case Tabs.calendar:
         return BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.calendar_month,
               color: iconColor,
             ),
-            label: this.name);
+            label: name);
       case Tabs.keyboard:
-        return BottomNavigationBarItem(
+        return const BottomNavigationBarItem(
             icon: Icon(
               Icons.keyboard,
               color: iconColor,
             ),
             label: 'Keyboard');
       case Tabs.textView:
-        return BottomNavigationBarItem(
+        return const BottomNavigationBarItem(
             icon: Icon(
               Icons.text_fields,
               color: iconColor,
             ),
             label: 'Text View');
       case Tabs.listsView:
-        return BottomNavigationBarItem(
+        return const BottomNavigationBarItem(
           icon: Icon(
             Icons.list,
             color: iconColor,
           ),
           label: 'Lists',
+        );
+      case Tabs.sliverCheckView:
+        return const BottomNavigationBarItem(
+          icon: Icon(
+            Icons.view_agenda,
+            color: iconColor,
+          ),
+          label: 'Nested Scroll View',
         );
     }
   }
