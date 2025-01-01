@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:photo_manager/photo_manager.dart';
+import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
-class ListsView extends StatelessWidget {
+class ListsView extends HookWidget {
   ListsView({super.key});
 
   final Map<String, List<String>> categories = {
@@ -11,6 +14,12 @@ class ListsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final assets = useState<List<AssetEntity>>([]);
+    useEffect(() {
+      Future.microtask(() async {
+        assets.value = await get();
+      });
+    }, []);
     return Container(
       color: Colors.white,
       child: Column(
@@ -35,9 +44,26 @@ class ListsView extends StatelessWidget {
               print('選択された項目: $parent - $child');
             },
           ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: assets.value.length,
+              itemBuilder: (_, index) {
+                return AssetEntityImage(
+                  assets.value[index],
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  Future<List<AssetEntity>> get() async {
+    final result = await PhotoManager.requestPermissionExtend();
+    final assets = await PhotoManager.getAssetPathList();
+    final asset = await assets[0].getAssetListRange(start: 0, end: 10);
+    return asset;
   }
 }
 
@@ -64,6 +90,21 @@ class _Card extends StatelessWidget {
               fontSize: 14,
             ),
           ),
+          // Expanded(
+          //     child: GridView.builder(
+          //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //     crossAxisCount: 3,
+          //     crossAxisSpacing: 5,
+          //     mainAxisSpacing: 5,
+          //   ),
+          //   itemCount: 4,
+          //   itemBuilder: (context, index) => Container(
+          //     color: Colors.blue,
+          //     child: Center(
+          //       child: Text('Item $index'),
+          //     ),
+          //   ),
+          // )),
         ],
       ),
     );

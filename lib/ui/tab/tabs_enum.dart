@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ikenie_flutter/ui/tab/keyboard_actions.dart';
 import 'package:ikenie_flutter/ui/tab/lists_view.dart';
 import 'package:ikenie_flutter/ui/tab/nested_scroll_view.dart';
+import 'package:ikenie_flutter/ui/tab/router_view.dart';
 import 'package:ikenie_flutter/ui/tab/syncfusion_calendar.dart';
 import 'package:ikenie_flutter/ui/tab/text_view.dart';
 
@@ -10,7 +11,8 @@ enum Tabs {
   keyboard,
   textView,
   listsView,
-  sliverCheckView;
+  sliverCheckView,
+  routerView;
 
   String get title {
     switch (this) {
@@ -24,6 +26,8 @@ enum Tabs {
         return 'Lists View';
       case Tabs.sliverCheckView:
         return 'Nested Scroll View';
+      case Tabs.routerView:
+        return 'Router View';
     }
   }
 
@@ -39,6 +43,8 @@ enum Tabs {
         return ListsView();
       case Tabs.sliverCheckView:
         return const SliverCheckView();
+      case Tabs.routerView:
+        return const RouterView();
     }
   }
 
@@ -81,6 +87,14 @@ enum Tabs {
             color: iconColor,
           ),
           label: 'Nested Scroll View',
+        );
+      case Tabs.routerView:
+        return const BottomNavigationBarItem(
+          icon: Icon(
+            Icons.router,
+            color: iconColor,
+          ),
+          label: 'Router View',
         );
     }
   }

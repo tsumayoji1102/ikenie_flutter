@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ikenie_flutter/ui/router/router_setting.dart';
 import 'package:ikenie_flutter/ui/tab/tabs_enum.dart';
 
 void main() {
@@ -12,14 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const locale = const Locale('ja', 'JP');
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       locale: locale,
-      home: const MyHomePage(),
+      routerConfig: routerConfig,
       //supportedLocales: [locale],
     );
   }
