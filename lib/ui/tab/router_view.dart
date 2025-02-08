@@ -10,15 +10,12 @@ class RouterView extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: Column(
-          children: [
-            const SizedBox(height: 16.0),
-            _ListTile(
-              title: 'PhotosView',
-              onTap: () {
-                context.pushNamed(Routes.photos_page.name);
-              },
-            ),
-          ],
+          children: Routes.values
+              .map((route) => _ListTile(
+                    title: route.name,
+                    onTap: () => context.pushNamed(route.name),
+                  ))
+              .toList(),
         ));
   }
 }

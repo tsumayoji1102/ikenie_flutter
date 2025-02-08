@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
@@ -38,18 +39,51 @@ class ListsView extends HookWidget {
               separatorBuilder: (context, index) => const SizedBox(width: 10),
             ),
           ),
-          CascadingDropdown(
-            items: categories,
-            onSelected: (parent, child) {
-              print('選択された項目: $parent - $child');
+          const SizedBox(height: 20),
+          InkWell(
+            onTap: () async {
+              const platform = MethodChannel('photo_manager');
+              final value = await platform.invokeMethod('select_photo');
             },
+            child: const Text(
+              "ライブラリを表示",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
+          const SizedBox(height: 20),
           Expanded(
-            child: ListView.builder(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+              ),
               itemCount: assets.value.length,
-              itemBuilder: (_, index) {
-                return AssetEntityImage(
-                  assets.value[index],
+              itemBuilder: (context, index) {
+                final asset = assets.value[index];
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    AssetEntityImage(
+                      asset,
+                      thumbnailSize: const ThumbnailSize(200, 200),
+                      fit: BoxFit.cover,
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
