@@ -62,19 +62,19 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun getImageId(uri: android.net.Uri): String? {
-        val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(MediaStore.Images.Media._ID)
         val selection = "${MediaStore.Images.Media._ID} = ?"
         val selectionArgs = arrayOf(ContentUris.parseId(uri).toString())
         return try {
             contentResolver.query(
-                uri,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 projection,
                 selection,
                 selectionArgs,
                 null
             )?.use { cursor ->
                 if (cursor.moveToFirst()) {
+                    val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
                     cursor.getString(idColumn)
                 } else {
                     null

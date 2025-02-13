@@ -16,11 +16,13 @@ class ListsView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final assets = useState<List<AssetEntity>>([]);
+    final selectedAssets = useState<List<AssetEntity>>([]);
     useEffect(() {
       Future.microtask(() async {
         assets.value = await get();
         print("assets.value: ${assets.value}");
       });
+      return null;
     }, []);
     return Container(
       color: Colors.white,
@@ -44,8 +46,16 @@ class ListsView extends HookWidget {
           InkWell(
             onTap: () async {
               const platform = MethodChannel('photo_manager');
-              final value = await platform.invokeMethod('select_photo');
-              print("select_photo: $value");
+              final assetIds =
+                  await platform.invokeMethod('select_photo') ?? <String>[];
+              print("select_photo: $assetIds");
+              final newSelectedAssets = <AssetEntity>[];
+              for (final assetId in assetIds) {
+                final asset = await AssetEntity.fromId(assetId);
+                if (asset == null) continue;
+                newSelectedAssets.add(asset);
+              }
+              selectedAssets.value = newSelectedAssets;
             },
             child: const Text(
               "ライブラリを表示",
@@ -66,26 +76,19 @@ class ListsView extends HookWidget {
               itemCount: assets.value.length,
               itemBuilder: (context, index) {
                 final asset = assets.value[index];
-                return Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    AssetEntityImage(
-                      asset,
-                      thumbnailSize: const ThumbnailSize(200, 200),
-                      fit: BoxFit.cover,
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                  ],
+                final isSelected = selectedAssets.value.contains(asset);
+                return _GridPhoto(
+                  asset: asset,
+                  isSelected: isSelected,
+                  onTap: (isSelected) {
+                    final newSelectedAssets = selectedAssets.value;
+                    if (isSelected) {
+                      newSelectedAssets.remove(asset);
+                    } else {
+                      newSelectedAssets.add(asset);
+                    }
+                    selectedAssets.value = newSelectedAssets;
+                  },
                 );
               },
             ),
@@ -99,6 +102,55 @@ class ListsView extends HookWidget {
     final result = await PhotoManager.requestPermissionExtend();
     final asset = await PhotoManager.getAssetListRange(start: 0, end: 10);
     return asset;
+  }
+}
+
+class _GridPhoto extends HookWidget {
+  const _GridPhoto({
+    required this.asset,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final AssetEntity asset;
+  final bool isSelected;
+  final Function(bool isSelected) onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelectedState = useState(isSelected);
+    useEffect(() {
+      isSelectedState.value = isSelected;
+      return null;
+    }, [isSelected]);
+    return GestureDetector(
+      onTap: () {
+        isSelectedState.value = !isSelectedState.value;
+        onTap(isSelectedState.value);
+      },
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          AssetEntityImage(
+            asset,
+            thumbnailSize: const ThumbnailSize(200, 200),
+            fit: BoxFit.cover,
+          ),
+          if (isSelectedState.value)
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                width: 30,
+                height: 30,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }
 
