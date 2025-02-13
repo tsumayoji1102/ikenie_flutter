@@ -45,7 +45,7 @@ class ListsView extends HookWidget {
             onTap: () async {
               const platform = MethodChannel('photo_manager');
               final value = await platform.invokeMethod('select_photo');
-              print(value);
+              print("select_photo: $value");
             },
             child: const Text(
               "ライブラリを表示",

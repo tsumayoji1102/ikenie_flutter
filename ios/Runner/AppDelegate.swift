@@ -5,7 +5,7 @@ import UIKit
 @main
 @objc class AppDelegate: FlutterAppDelegate {
   private var viewController: FlutterViewController?
-  private var assetIds: [String] = []
+  private var flutterResult: FlutterResult!
 
   override func application(
     _ application: UIApplication,
@@ -19,16 +19,14 @@ import UIKit
     viewController = controller
     let methodChannel = FlutterMethodChannel(
       name: "photo_manager",
-      binaryMessenger: controller.binaryMessenger)  // ここを修正
+      binaryMessenger: controller.binaryMessenger)
 
     methodChannel.setMethodCallHandler({
       (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-      print("call.method: \(call.method)")
+      self.flutterResult = result
       if call.method == "select_photo" {
-        self.selectPhoto()  // selfを追加
-        result(self.assetIds)
+        self.selectPhoto()
       } else {
-        print("Not implemented aaaaa")
         result(FlutterMethodNotImplemented)
       }
     })
@@ -42,7 +40,9 @@ import UIKit
     var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
     config.selectionLimit = 10  // 1枚選択。複数の場合は0以上の数値
     config.filter = .images  // 画像のみ
-
+    if #available(iOS 15.0, *) {
+      config.selection = .ordered
+    }
     // PHAssetを取得できるように設定
     config.preselectedAssetIdentifiers = []
 
@@ -60,14 +60,7 @@ extension AppDelegate: PHPickerViewControllerDelegate {
     let identifiers = results.compactMap { result in
       result.assetIdentifier
     }
-    print("identifiers: \(identifiers)")
-
-    // PHAssetを取得
-    let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
-    print("assetIds: \(assetIds)")
-    assets.enumerateObjects { (asset, index, stop) in
-      print("Asset ID: \(asset.localIdentifier)")
-    }
+    self.flutterResult(identifiers)
   }
 
 }
