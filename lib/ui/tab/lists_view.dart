@@ -19,7 +19,7 @@ class ListsView extends HookWidget {
     useEffect(() {
       Future.microtask(() async {
         assets.value = await get();
-        print(assets.value);
+        print("assets.value: ${assets.value}");
       });
     }, []);
     return Container(

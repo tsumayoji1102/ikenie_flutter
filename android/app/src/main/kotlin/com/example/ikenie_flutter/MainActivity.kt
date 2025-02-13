@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import android.content.ContentUris
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "photo_manager"
@@ -45,41 +46,36 @@ class MainActivity : FlutterActivity() {
             
             if (data?.clipData != null) {
                 val count = data.clipData!!.itemCount
-                println("Selected count: $count")
                 for (i in 0 until count) {
                     val uri = data.clipData!!.getItemAt(i).uri
                     getImageId(uri)?.let { id ->
-                        println("Selected ID: $id")
                         selectedImageIds.add(id)
                     }
                 }
             } else if (data?.data != null) {
                 getImageId(data.data!!)?.let { id ->
-                    println("Selected ID: $id")
                     selectedImageIds.add(id)
                 }
             }
-
-            println("Selected IDsss: $selectedImageIds")
-            methodResult.success(selectedImageIds)
+            methodResult!!.success(selectedImageIds)
         }
     }
 
     private fun getImageId(uri: android.net.Uri): String? {
+        val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(MediaStore.Images.Media._ID)
+        val selection = "${MediaStore.Images.Media._ID} = ?"
+        val selectionArgs = arrayOf(ContentUris.parseId(uri).toString())
         return try {
             contentResolver.query(
                 uri,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null
             )?.use { cursor ->
                 if (cursor.moveToFirst()) {
-                    val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-                    val result = cursor.getString(idColumn)
-                    println("ID: $result")
-                    result
+                    cursor.getString(idColumn)
                 } else {
                     null
                 }
