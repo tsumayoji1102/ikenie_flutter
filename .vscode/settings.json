@@ -9,5 +9,6 @@
     "syncfusion",
     "unfocus"
   ],
-  "dart.flutterSdkPath": ".fvm/versions/3.22.1"
+  "dart.flutterSdkPath": ".fvm/versions/3.27.1",
+  "cmake.sourceDirectory": "/Users/shiomiryousuke/ikenie_repos/ikenie_flutter/linux"
 }

@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <!-- Android 13以降の場合 -->
+    <!-- <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />  -->
     <application
         android:label="ikenie_flutter"
         android:name="${applicationName}"

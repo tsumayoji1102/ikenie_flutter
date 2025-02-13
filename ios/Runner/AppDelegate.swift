@@ -39,7 +39,7 @@ import UIKit
 
   // 以下は同じ
   func selectPhoto() {
-    var config = PHPickerConfiguration()
+    var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
     config.selectionLimit = 10  // 1枚選択。複数の場合は0以上の数値
     config.filter = .images  // 画像のみ
 

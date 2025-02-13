@@ -19,6 +19,7 @@ class ListsView extends HookWidget {
     useEffect(() {
       Future.microtask(() async {
         assets.value = await get();
+        print(assets.value);
       });
     }, []);
     return Container(
@@ -44,6 +45,7 @@ class ListsView extends HookWidget {
             onTap: () async {
               const platform = MethodChannel('photo_manager');
               final value = await platform.invokeMethod('select_photo');
+              print(value);
             },
             child: const Text(
               "ライブラリを表示",
@@ -95,8 +97,7 @@ class ListsView extends HookWidget {
 
   Future<List<AssetEntity>> get() async {
     final result = await PhotoManager.requestPermissionExtend();
-    final assets = await PhotoManager.getAssetPathList();
-    final asset = await assets[0].getAssetListRange(start: 0, end: 10);
+    final asset = await PhotoManager.getAssetListRange(start: 0, end: 10);
     return asset;
   }
 }
