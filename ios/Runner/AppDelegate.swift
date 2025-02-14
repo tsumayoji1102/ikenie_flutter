@@ -40,8 +40,11 @@ import UIKit
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+}
 
-  func selectPhoto(args: [String: Any]) {
+// MARK: - channel methods
+extension AppDelegate {
+  private func selectPhoto(args: [String: Any]) {
     let selectedIds = args["selectedIds"] as? [String] ?? []
     let maxCount = args["maxCount"] as? Int ?? 100
 
@@ -69,5 +72,4 @@ extension AppDelegate: PHPickerViewControllerDelegate {
     }
     self.flutterResult(identifiers)
   }
-
 }

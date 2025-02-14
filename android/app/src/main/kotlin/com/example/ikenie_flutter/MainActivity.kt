@@ -10,7 +10,6 @@ import android.content.ContentUris
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "photo_manager"
-    private var selectedImageIds: ArrayList<String> = ArrayList()
     private val PICK_IMAGES_REQUEST = 1
     private var methodResult: MethodChannel.Result? = null
 
@@ -19,7 +18,6 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             methodResult = result
-            println("call.arguments: ${call.arguments}")
             when (call.method) {
                 "select_photo" -> {
                     val args = call.arguments as? Map<String, Any>
@@ -41,16 +39,16 @@ class MainActivity : FlutterActivity() {
         val selectedIds = args["selectedIds"] as List<String>
         val maxCount = args["maxCount"] as Int
 
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            type = "image/*"
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        }
+        // val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+        //     type = "image/*"
+        //     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        // }
 
-        try {
-            intent.putExtra("android.intent.extra.INITIAL_INTENTS", selectedIds.toTypedArray())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        // try {
+        //     intent.putExtra("android.intent.extra.INITIAL_INTENTS", selectedIds.toTypedArray())
+        // } catch (e: Exception) {
+        //     e.printStackTrace()
+        // }
         // val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
         //     type = "image/*"
         //     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
@@ -69,6 +67,21 @@ class MainActivity : FlutterActivity() {
         // } catch (e: Exception) {
         //     e.printStackTrace()
         // }
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+            type = "image/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            
+            // 選択上限を設定
+            putExtra("android.intent.extra.LOCAL_ONLY", true)
+            
+            try {
+                // すでに選択されている写真IDを設定
+                // 注：全てのデバイスでサポートされているわけではありません
+                putExtra("android.intent.extra.INITIAL_INTENTS", selectedIds.toTypedArray())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
         startActivityForResult(intent, PICK_IMAGES_REQUEST)
     }
 
@@ -76,7 +89,7 @@ class MainActivity : FlutterActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         
         if (requestCode == PICK_IMAGES_REQUEST && resultCode == Activity.RESULT_OK) {
-            selectedImageIds.clear()
+            val selectedImageIds = mutableListOf<String>()
             
             if (data?.clipData != null) {
                 val count = data.clipData!!.itemCount
@@ -97,14 +110,12 @@ class MainActivity : FlutterActivity() {
 
     private fun getImageId(uri: android.net.Uri): String? {
         val projection = arrayOf(MediaStore.Images.Media._ID)
-        val selection = "${MediaStore.Images.Media._ID} = ?"
-        val selectionArgs = arrayOf(ContentUris.parseId(uri).toString())
         return try {
             contentResolver.query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                uri,
                 projection,
-                selection,
-                selectionArgs,
+                null,
+                null,
                 null
             )?.use { cursor ->
                 if (cursor.moveToFirst()) {
