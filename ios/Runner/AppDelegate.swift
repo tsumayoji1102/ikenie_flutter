@@ -25,7 +25,13 @@ import UIKit
       (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
       self.flutterResult = result
       if call.method == "select_photo" {
-        self.selectPhoto()
+        print("arguments: \(call.arguments)")
+        guard let args = call.arguments as? [String: Any] else {
+          result(
+            FlutterError(code: "ARGUMENT_ERROR", message: "Arguments is invalid", details: nil))
+          return
+        }
+        self.selectPhoto(args: args)
       } else {
         result(FlutterMethodNotImplemented)
       }
@@ -35,16 +41,17 @@ import UIKit
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
-  // 以下は同じ
-  func selectPhoto() {
+  func selectPhoto(args: [String: Any]) {
+    let selectedIds = args["selectedIds"] as? [String] ?? []
+    let maxCount = args["maxCount"] as? Int ?? 100
+
     var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-    config.selectionLimit = 10  // 1枚選択。複数の場合は0以上の数値
-    config.filter = .images  // 画像のみ
+    config.selectionLimit = maxCount
+    config.filter = .images
     if #available(iOS 15.0, *) {
       config.selection = .ordered
     }
-    // PHAssetを取得できるように設定
-    config.preselectedAssetIdentifiers = []
+    config.preselectedAssetIdentifiers = selectedIds
 
     let picker = PHPickerViewController(configuration: config)
     picker.delegate = self

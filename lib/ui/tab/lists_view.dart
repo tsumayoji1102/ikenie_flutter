@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
 
@@ -45,9 +46,15 @@ class ListsView extends HookWidget {
           const SizedBox(height: 20),
           InkWell(
             onTap: () async {
+              // final result = await ImagePicker().pickMultiImage();
+              // print(result);
               const platform = MethodChannel('photo_manager');
-              final assetIds =
-                  await platform.invokeMethod('select_photo') ?? <String>[];
+              final assetIds = await platform.invokeMethod('select_photo', {
+                    'selectedIds':
+                        selectedAssets.value.map((asset) => asset.id).toList(),
+                    'maxCount': 5,
+                  }) ??
+                  [];
               print("select_photo: $assetIds");
               final newSelectedAssets = <AssetEntity>[];
               for (final assetId in assetIds) {

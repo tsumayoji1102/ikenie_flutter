@@ -19,9 +19,16 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             methodResult = result
+            println("call.arguments: ${call.arguments}")
             when (call.method) {
                 "select_photo" -> {
-                    selectPhoto()
+                    val args = call.arguments as? Map<String, Any>
+                    println("args: $args")
+                    if(args == null) {
+                        result.error("INVALID_ARGUMENT", "Arguments is null", null)
+                        return@setMethodCallHandler
+                    }
+                    selectPhoto(args)
                 }
                 else -> {
                     result.notImplemented()
@@ -30,11 +37,38 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun selectPhoto() {
+    private fun selectPhoto(args: Map<String, Any>) {
+        val selectedIds = args["selectedIds"] as List<String>
+        val maxCount = args["maxCount"] as Int
+
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
+
+        try {
+            intent.putExtra("android.intent.extra.INITIAL_INTENTS", selectedIds.toTypedArray())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        // val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+        //     type = "image/*"
+        //     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        //     // 選択上限を設定
+        //     putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+        //     putExtra("android.intent.extra.INITIAL_INTENTS", selectedImageIds.toTypedArray())
+        //     // 選択順を保持するためのフラグ
+        //     putExtra("android.intent.extra.ORDERING", true)
+        // }
+
+        // try {
+        //     intent.putExtra("multi-pick", true)
+        //     intent.putExtra("max-items", maxCount)
+        //     // すでに選択されている画像のIDを渡す
+        //     intent.putExtra("selected-items", selectedImageIds.toTypedArray())
+        // } catch (e: Exception) {
+        //     e.printStackTrace()
+        // }
         startActivityForResult(intent, PICK_IMAGES_REQUEST)
     }
 

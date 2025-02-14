@@ -43,6 +43,8 @@ dependencies:
   photo_manager: ^3.6.3
   photo_manager_image_provider: ^2.2.0
   signature: ^5.5.0
+  image_picker: ^1.1.2
+  image_picker_android: ^0.8.12+20
 
 dev_dependencies:
   flutter_test:
