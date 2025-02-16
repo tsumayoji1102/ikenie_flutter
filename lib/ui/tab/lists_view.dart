@@ -52,7 +52,7 @@ class ListsView extends HookWidget {
               final assetIds = await platform.invokeMethod('select_photo', {
                     'selectedIds':
                         selectedAssets.value.map((asset) => asset.id).toList(),
-                    'maxCount': 5,
+                    'maxCount': 100,
                   }) ??
                   [];
               print("select_photo: $assetIds");
@@ -107,7 +107,7 @@ class ListsView extends HookWidget {
 
   Future<List<AssetEntity>> get() async {
     final result = await PhotoManager.requestPermissionExtend();
-    final asset = await PhotoManager.getAssetListRange(start: 0, end: 10);
+    final asset = await PhotoManager.getAssetListRange(start: 0, end: 100);
     return asset;
   }
 }

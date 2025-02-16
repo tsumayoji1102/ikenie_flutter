@@ -20,13 +20,14 @@ class MainActivity : FlutterActivity() {
             methodResult = result
             when (call.method) {
                 "select_photo" -> {
-                    val args = call.arguments as? Map<String, Any>
-                    println("args: $args")
-                    if(args == null) {
-                        result.error("INVALID_ARGUMENT", "Arguments is null", null)
-                        return@setMethodCallHandler
-                    }
-                    selectPhoto(args)
+                    // val args = call.arguments as? Map<String, Any>
+                    // println("args: $args")
+                    // if(args == null) {
+                    //     result.error("INVALID_ARGUMENT", "Arguments is null", null)
+                    //     return@setMethodCallHandler
+                    // }
+                    // selectPhoto(args)
+                    selectPhoto()
                 }
                 else -> {
                     result.notImplemented()
@@ -35,14 +36,14 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun selectPhoto(args: Map<String, Any>) {
-        val selectedIds = args["selectedIds"] as List<String>
-        val maxCount = args["maxCount"] as Int
+    private fun selectPhoto() { // (args: Map<String, Any>) {
+        // val selectedIds = args["selectedIds"] as List<String>
+        // val maxCount = args["maxCount"] as Int
 
-        // val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-        //     type = "image/*"
-        //     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        // }
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "image/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+        }
 
         // try {
         //     intent.putExtra("android.intent.extra.INITIAL_INTENTS", selectedIds.toTypedArray())
@@ -67,21 +68,22 @@ class MainActivity : FlutterActivity() {
         // } catch (e: Exception) {
         //     e.printStackTrace()
         // }
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-            type = "image/*"
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        // val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+        //     type = "image/*"
+        //     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             
-            // 選択上限を設定
-            putExtra("android.intent.extra.LOCAL_ONLY", true)
+        //     // 選択上限を設定
+        //     putExtra("android.intent.extra.LOCAL_ONLY", true)
+        //     putExtra("android.intent.extra.LIMIT", maxCount)
             
-            try {
-                // すでに選択されている写真IDを設定
-                // 注：全てのデバイスでサポートされているわけではありません
-                putExtra("android.intent.extra.INITIAL_INTENTS", selectedIds.toTypedArray())
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        //     try {
+        //         // すでに選択されている写真IDを設定
+        //         // 注：全てのデバイスでサポートされているわけではありません
+        //         putExtra("android.intent.extra.INITIAL_INTENTS", selectedIds.toTypedArray())
+        //     } catch (e: Exception) {
+        //         e.printStackTrace()
+        //     }
+        // }
         startActivityForResult(intent, PICK_IMAGES_REQUEST)
     }
 
@@ -95,6 +97,7 @@ class MainActivity : FlutterActivity() {
                 val count = data.clipData!!.itemCount
                 for (i in 0 until count) {
                     val uri = data.clipData!!.getItemAt(i).uri
+                    println("uri: $uri")
                     getImageId(uri)?.let { id ->
                         selectedImageIds.add(id)
                     }
@@ -110,12 +113,14 @@ class MainActivity : FlutterActivity() {
 
     private fun getImageId(uri: android.net.Uri): String? {
         val projection = arrayOf(MediaStore.Images.Media._ID)
+        val selection = "${MediaStore.Images.Media._ID} = ?"
+        val selectionArgs = arrayOf(ContentUris.parseId(uri).toString())
         return try {
             contentResolver.query(
-                uri,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null
             )?.use { cursor ->
                 if (cursor.moveToFirst()) {
