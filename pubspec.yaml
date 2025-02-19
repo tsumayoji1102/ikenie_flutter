@@ -45,6 +45,9 @@ dependencies:
   signature: ^5.5.0
   image_picker: ^1.1.2
   image_picker_android: ^0.8.12+20
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  json_serializable: ^6.9.4
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +59,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.15
+  freezed: ^2.5.8
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

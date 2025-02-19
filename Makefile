@@ -10,3 +10,7 @@ build-web:
 	flutter build web --base-href /ikenie_flutter/
 	rm -rf docs/*
 	mv build/web/* docs/
+
+
+build_runner:
+	flutter pub run build_runner build --delete-conflicting-outputs
