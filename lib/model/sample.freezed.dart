@@ -123,8 +123,9 @@ class __$$SampleImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SampleImpl implements _Sample {
-  const _$SampleImpl({required this.id, required this.name, required this.age});
+class _$SampleImpl extends _Sample {
+  const _$SampleImpl({required this.id, required this.name, required this.age})
+      : super._();
 
   factory _$SampleImpl.fromJson(Map<String, dynamic> json) =>
       _$$SampleImplFromJson(json);
@@ -171,11 +172,12 @@ class _$SampleImpl implements _Sample {
   }
 }
 
-abstract class _Sample implements Sample {
+abstract class _Sample extends Sample {
   const factory _Sample(
       {required final String id,
       required final String name,
       required final int age}) = _$SampleImpl;
+  const _Sample._() : super._();
 
   factory _Sample.fromJson(Map<String, dynamic> json) = _$SampleImpl.fromJson;
 
