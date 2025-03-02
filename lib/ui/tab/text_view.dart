@@ -1,9 +1,8 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:ikenie_flutter/ui/dialog/modal_dialog.dart';
 import 'package:linkify/linkify.dart';
 
 class TextView extends StatelessWidget {
@@ -11,23 +10,30 @@ class TextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SelectableCopyText(
+          const SelectableCopyText(
               "ああああああ 111111 aaaaaaa ###### \n https://google.com"),
-          SizedBox(height: 20),
-          TextField(
+          const SizedBox(height: 20),
+          const TextField(
             decoration: InputDecoration(
               hintText: 'Enter your username',
             ),
           ),
-          SizedBox(height: 20),
-          Text("拡大表示実験用", style: TextStyle(fontSize: 30)),
-          SizedBox(height: 4),
-          Text("適当な文字など入れてみる") //, style: TextStyle(fontSize: 12)),
+          const SizedBox(height: 20),
+          const Text("拡大表示実験用", style: TextStyle(fontSize: 30)),
+          const SizedBox(height: 4),
+          const Text("適当な文字など入れてみる"), //, style: TextStyle(fontSize: 12)),
+          const SizedBox(height: 20),
+          InkWell(
+            onTap: () {
+              ModalDialog.show(context);
+            },
+            child: const Text('Tap me'),
+          )
         ],
       ),
     );
