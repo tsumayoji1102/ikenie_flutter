@@ -33,6 +33,23 @@ class TextView extends StatelessWidget {
               ModalDialog.show(context);
             },
             child: const Text('Tap me'),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          InkWell(
+            onTap: () {
+              var i = 0;
+              while (i <= 10) {
+                print(i);
+                i++;
+              }
+              print("for loop");
+              for (var i = 0; i <= 10; i++) {
+                print(i);
+              }
+            },
+            child: const Text('print log'),
           )
         ],
       ),

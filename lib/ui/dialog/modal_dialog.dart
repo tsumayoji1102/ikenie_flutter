@@ -34,17 +34,13 @@ class ModalDialog extends StatelessWidget {
   }
 
   static Future<void> show(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return LayoutBuilder(
-            builder: (_, constrains) => SizedBox(
-                  height: constrains.maxHeight,
-                  child: const ModalDialog(),
-                ));
-      },
-    );
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const IntrinsicHeight(
+            child: ModalDialog(),
+          );
+        });
   }
 }
