@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ikenie_flutter/ui/router/router_setting.dart';
 
+extension RouterViewExtension on Routes {
+  String get displayTitle => name.replaceAll('_', ' ').toUpperCase();
+}
+
 class RouterView extends StatelessWidget {
   const RouterView({super.key});
 
@@ -23,35 +27,20 @@ class RouterView extends StatelessWidget {
                 ),
               ),
             ),
-            ...Routes.values
-                .map((route) => _ListTile(
-                      title: _getDisplayTitle(route.name),
-                      onTap: () => context.pushNamed(route.name),
-                      isClaudeScreen: route.name == 'claude_list_page',
-                    ))
-                .toList(),
+            ...Routes.values.map((route) => _ListTile(
+                  title: route.displayTitle,
+                  onTap: () => context.pushNamed(route.name),
+                  isClaudeScreen: route.name == 'claude_list_page',
+                ))
           ],
         ));
-  }
-
-  String _getDisplayTitle(String routeName) {
-    switch (routeName) {
-      case 'draw_page':
-        return 'Drawing Canvas';
-      case 'nested_scroll_view_page':
-        return 'Nested Scroll View';
-      case 'claude_list_page':
-        return 'Claude Insights';
-      default:
-        return routeName.replaceAll('_', ' ').toUpperCase();
-    }
   }
 }
 
 class _ListTile extends StatelessWidget {
   const _ListTile({
-    super.key, 
-    required this.title, 
+    super.key,
+    required this.title,
     required this.onTap,
     this.isClaudeScreen = false,
   });
@@ -69,15 +58,15 @@ class _ListTile extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(
-            color: isClaudeScreen 
-                ? const Color(0xFF6366F1) 
+            color: isClaudeScreen
+                ? const Color(0xFF6366F1)
                 : const Color(0xFFE5E7EB),
             width: isClaudeScreen ? 2 : 1,
           ),
         ),
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20, 
+            horizontal: 20,
             vertical: 8,
           ),
           title: Row(
@@ -99,9 +88,10 @@ class _ListTile extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontWeight: isClaudeScreen ? FontWeight.w600 : FontWeight.w500,
-                  color: isClaudeScreen 
-                      ? const Color(0xFF6366F1) 
+                  fontWeight:
+                      isClaudeScreen ? FontWeight.w600 : FontWeight.w500,
+                  color: isClaudeScreen
+                      ? const Color(0xFF6366F1)
                       : const Color(0xFF1F1F1F),
                   fontSize: 16,
                 ),
@@ -111,8 +101,8 @@ class _ListTile extends StatelessWidget {
           trailing: Icon(
             Icons.arrow_forward_ios,
             size: 16,
-            color: isClaudeScreen 
-                ? const Color(0xFF6366F1) 
+            color: isClaudeScreen
+                ? const Color(0xFF6366F1)
                 : const Color(0xFF9CA3AF),
           ),
           onTap: onTap,
