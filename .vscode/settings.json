@@ -5,10 +5,15 @@
     "Linkifier",
     "linkifiers",
     "linkify",
+    "riverpod",
     "Schyler",
     "syncfusion",
     "unfocus"
   ],
-  "dart.flutterSdkPath": ".fvm/versions/3.29.2",
-  "cmake.sourceDirectory": "/Users/shiomiryousuke/ikenie_repos/ikenie_flutter/linux"
+  "dart.flutterSdkPath": ".fvm/versions/3.35.3",
+  "cmake.sourceDirectory": "/Users/shiomiryousuke/ikenie_repos/ikenie_flutter/linux",
+  "files.exclude": {
+    "**/*.g.dart": true,
+    "**/*.freezed.dart": true
+  }
 }

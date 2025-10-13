@@ -12,5 +12,8 @@ build-web:
 	mv build/web/* docs/
 
 
-build_runner:
+g:
 	flutter pub run build_runner build --delete-conflicting-outputs
+
+g-watch:
+	flutter pub run build_runner watch --delete-conflicting-outputs

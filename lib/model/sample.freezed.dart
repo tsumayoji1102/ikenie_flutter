@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,189 +9,275 @@ part of 'sample.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Sample _$SampleFromJson(Map<String, dynamic> json) {
-  return _Sample.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Sample {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  int get age => throw _privateConstructorUsedError;
+
+ String get id; String get name; int get age;
+/// Create a copy of Sample
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SampleCopyWith<Sample> get copyWith => _$SampleCopyWithImpl<Sample>(this as Sample, _$identity);
 
   /// Serializes this Sample to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of Sample
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SampleCopyWith<Sample> get copyWith => throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Sample&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.age, age) || other.age == age));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,name,age);
+
+@override
+String toString() {
+  return 'Sample(id: $id, name: $name, age: $age)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $SampleCopyWith<$Res> {
-  factory $SampleCopyWith(Sample value, $Res Function(Sample) then) =
-      _$SampleCopyWithImpl<$Res, Sample>;
-  @useResult
-  $Res call({String id, String name, int age});
-}
+abstract mixin class $SampleCopyWith<$Res>  {
+  factory $SampleCopyWith(Sample value, $Res Function(Sample) _then) = _$SampleCopyWithImpl;
+@useResult
+$Res call({
+ String id, String name, int age
+});
 
+
+
+
+}
 /// @nodoc
-class _$SampleCopyWithImpl<$Res, $Val extends Sample>
+class _$SampleCopyWithImpl<$Res>
     implements $SampleCopyWith<$Res> {
-  _$SampleCopyWithImpl(this._value, this._then);
+  _$SampleCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Sample _self;
+  final $Res Function(Sample) _then;
 
-  /// Create a copy of Sample
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? age = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      age: null == age
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
+/// Create a copy of Sample
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? age = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-abstract class _$$SampleImplCopyWith<$Res> implements $SampleCopyWith<$Res> {
-  factory _$$SampleImplCopyWith(
-          _$SampleImpl value, $Res Function(_$SampleImpl) then) =
-      __$$SampleImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String id, String name, int age});
 }
 
-/// @nodoc
-class __$$SampleImplCopyWithImpl<$Res>
-    extends _$SampleCopyWithImpl<$Res, _$SampleImpl>
-    implements _$$SampleImplCopyWith<$Res> {
-  __$$SampleImplCopyWithImpl(
-      _$SampleImpl _value, $Res Function(_$SampleImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of Sample
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? age = null,
-  }) {
-    return _then(_$SampleImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      age: null == age
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+/// Adds pattern-matching-related methods to [Sample].
+extension SamplePatterns on Sample {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Sample value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Sample() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Sample value)  $default,){
+final _that = this;
+switch (_that) {
+case _Sample():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Sample value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Sample() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  int age)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Sample() when $default != null:
+return $default(_that.id,_that.name,_that.age);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  int age)  $default,) {final _that = this;
+switch (_that) {
+case _Sample():
+return $default(_that.id,_that.name,_that.age);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  int age)?  $default,) {final _that = this;
+switch (_that) {
+case _Sample() when $default != null:
+return $default(_that.id,_that.name,_that.age);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SampleImpl extends _Sample {
-  const _$SampleImpl({required this.id, required this.name, required this.age})
-      : super._();
 
-  factory _$SampleImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SampleImplFromJson(json);
+class _Sample extends Sample {
+  const _Sample({required this.id, required this.name, required this.age}): super._();
+  factory _Sample.fromJson(Map<String, dynamic> json) => _$SampleFromJson(json);
 
-  @override
-  final String id;
-  @override
-  final String name;
-  @override
-  final int age;
+@override final  String id;
+@override final  String name;
+@override final  int age;
 
-  @override
-  String toString() {
-    return 'Sample(id: $id, name: $name, age: $age)';
-  }
+/// Create a copy of Sample
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SampleCopyWith<_Sample> get copyWith => __$SampleCopyWithImpl<_Sample>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SampleImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.age, age) || other.age == age));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, name, age);
-
-  /// Create a copy of Sample
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SampleImplCopyWith<_$SampleImpl> get copyWith =>
-      __$$SampleImplCopyWithImpl<_$SampleImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SampleImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$SampleToJson(this, );
 }
 
-abstract class _Sample extends Sample {
-  const factory _Sample(
-      {required final String id,
-      required final String name,
-      required final int age}) = _$SampleImpl;
-  const _Sample._() : super._();
-
-  factory _Sample.fromJson(Map<String, dynamic> json) = _$SampleImpl.fromJson;
-
-  @override
-  String get id;
-  @override
-  String get name;
-  @override
-  int get age;
-
-  /// Create a copy of Sample
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SampleImplCopyWith<_$SampleImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Sample&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.age, age) || other.age == age));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,name,age);
+
+@override
+String toString() {
+  return 'Sample(id: $id, name: $name, age: $age)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SampleCopyWith<$Res> implements $SampleCopyWith<$Res> {
+  factory _$SampleCopyWith(_Sample value, $Res Function(_Sample) _then) = __$SampleCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String name, int age
+});
+
+
+
+
+}
+/// @nodoc
+class __$SampleCopyWithImpl<$Res>
+    implements _$SampleCopyWith<$Res> {
+  __$SampleCopyWithImpl(this._self, this._then);
+
+  final _Sample _self;
+  final $Res Function(_Sample) _then;
+
+/// Create a copy of Sample
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? age = null,}) {
+  return _then(_Sample(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+// dart format on
