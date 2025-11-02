@@ -2,26 +2,36 @@ import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ikenie_flutter/ui/dialog/modal_dialog.dart';
+import 'package:ikenie_flutter/ui/router/router_setting.dart';
 import 'package:linkify/linkify.dart';
+import 'package:pinput/pinput.dart';
 
-class TextView extends StatelessWidget {
+class TextView extends HookWidget {
   const TextView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = useTextEditingController();
+    final focusNode = useFocusNode();
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        focusNode.requestFocus();
+      });
+    });
     return Padding(
       padding: EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SelectableCopyText(
-              "ああああああ 111111 aaaaaaa ###### \n https://google.com"),
+            "ああああああ 111111 aaaaaaa ###### \n https://google.com",
+          ),
           const SizedBox(height: 20),
           const TextField(
-            decoration: InputDecoration(
-              hintText: 'Enter your username',
-            ),
+            decoration: InputDecoration(hintText: 'Enter your username'),
           ),
           const SizedBox(height: 20),
           const Text("拡大表示実験用", style: TextStyle(fontSize: 30)),
@@ -34,9 +44,7 @@ class TextView extends StatelessWidget {
             },
             child: const Text('Tap me'),
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           InkWell(
             onTap: () {
               var i = 0;
@@ -50,7 +58,18 @@ class TextView extends StatelessWidget {
               }
             },
             child: const Text('print log'),
-          )
+          ),
+          TextField(
+            controller: controller,
+            focusNode: focusNode,
+            decoration: InputDecoration(hintText: 'Enter your username'),
+          ),
+          TextButton(
+            onPressed: () {
+              context.pushNamed(Routes.pinput_page.name);
+            },
+            child: Text("テキストフィールドを確認"),
+          ),
         ],
       ),
     );
@@ -66,10 +85,7 @@ class SelectableCopyText extends StatelessWidget {
   Widget build(BuildContext context) {
     final textElements = linkify(
       text,
-      linkifiers: const [
-        UrlLinkifier(),
-        EmailLinkifier(),
-      ],
+      linkifiers: const [UrlLinkifier(), EmailLinkifier()],
     );
 
     return SelectableText.rich(
