@@ -46,3 +46,9 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# firebase  
+firebase.json
+GoogleService-Info.plist
+google-services.json
+firebase_options.dart
