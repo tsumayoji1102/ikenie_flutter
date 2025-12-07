@@ -63,12 +63,34 @@ class TextView extends HookWidget {
             controller: controller,
             focusNode: focusNode,
             decoration: InputDecoration(hintText: 'Enter your username'),
-          ),
+           ),
           TextButton(
             onPressed: () {
               context.pushNamed(Routes.pinput_page.name);
             },
             child: Text("テキストフィールドを確認"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              void _showErrorDialog(BuildContext context, String message) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('エラー'),
+                    content: Text(message),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('閉じる'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              _showErrorDialog(context, "エラーメッセージ");
+            },
+            child: Text("投稿"),
           ),
         ],
       ),
